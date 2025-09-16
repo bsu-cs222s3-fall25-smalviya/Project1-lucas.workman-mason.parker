@@ -1,11 +1,14 @@
 package Internal;
 
-
-
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URLConnection;
 
 public class Main {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        URLConnection connection = FetchWikipedia.connectToWikipedia();
+        String jsonData = JSONConvert.convertJsonToTimestampData(connection);
+        System.out.println(jsonData);
     }
 }

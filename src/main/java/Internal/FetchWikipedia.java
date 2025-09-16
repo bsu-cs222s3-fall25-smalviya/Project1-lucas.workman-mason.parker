@@ -1,18 +1,13 @@
 package Internal;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.util.*;
-import java.net.http.*;
-import java.net.*;
 
-public class Query {
-
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        URLConnection connection = connectToWikipedia();
-        String jsonData = readJsonAsStringFrom(connection);
-        System.out.println(jsonData);
-    }
+public class FetchWikipedia {
 
     public static URLConnection connectToWikipedia() throws IOException, URISyntaxException {
 
@@ -26,10 +21,5 @@ public class Query {
         connection.connect();
         return connection;
     }
-
-    private static String readJsonAsStringFrom(URLConnection urlConnection) throws IOException {
-        return new String(urlConnection.getInputStream().readAllBytes(), Charset.defaultCharset());
-    }
-
 
 }
