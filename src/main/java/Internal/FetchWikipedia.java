@@ -9,10 +9,10 @@ import java.nio.charset.Charset;
 
 public class FetchWikipedia {
 
-    public static URLConnection connectToWikipedia() throws IOException, URISyntaxException {
+    public static URLConnection getRawWikipediaData(String subject) throws IOException, URISyntaxException {
 
         String encodedURL = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" +
-                URLEncoder.encode("Trump", Charset.defaultCharset()) + "&rvprop=timestamp" +
+                URLEncoder.encode(subject, Charset.defaultCharset()) + "&rvprop=timestamp" +
                 URLEncoder.encode("|", Charset.defaultCharset()) + "user&rvlimit=4&redirects";
         URI uri = new URI(encodedURL);
 
