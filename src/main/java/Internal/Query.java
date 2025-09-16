@@ -1,21 +1,35 @@
 package Internal;
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.*;
-import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.*;
-import java.lang.Object;
-import java.net.URLConnection;
+import java.net.http.*;
+import java.net.*;
 
 public class Query {
 
-    public static void main(String[] args) throws IOException
-    {
-        URL url = new URL("https://en.wikipedia.org");
-        URLConnection connection = url.openConnection();
-        connection.setRequestProperty("User-Agent",
-                "Revision Reporter/0.1 (me@bsu.edu)");
-        InputStream inputStream = connection.getInputStream();
-        System.out.println(inputStream);
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        URLConnection connection = connectToWikipedia();
+        String jsonData = readJsonAsStringFrom(connection);
+        System.out.println(jsonData);
     }
+
+    public static URLConnection connectToWikipedia() throws IOException, URISyntaxException {
+
+        String encodedURL = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" +
+                URLEncoder.encode("Trump", Charset.defaultCharset()) + "&rvprop=timestamp" +
+                URLEncoder.encode("|", Charset.defaultCharset()) + "user&rvlimit=4&redirects";
+        URI uri = new URI(encodedURL);
+
+        URLConnection connection = uri.toURL().openConnection();
+        connection.setRequestProperty("User-Agent", "FirstProject/0.1 (academic use; https://example.com)");
+        connection.connect();
+        return connection;
+    }
+
+    private static String readJsonAsStringFrom(URLConnection urlConnection) throws IOException {
+        return new String(urlConnection.getInputStream().readAllBytes(), Charset.defaultCharset());
+    }
+
+
 }
