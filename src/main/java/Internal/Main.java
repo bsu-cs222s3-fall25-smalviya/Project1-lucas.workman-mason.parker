@@ -16,7 +16,7 @@ public class Main {
         ArrayList<String> pageOptions = new ArrayList<>();
         pageOptions.add("(0) Back ");
         pageOptions.add("(1) Get page data ");
-        pageOptions.add("(2) Search for last revision ");
+        pageOptions.add("(2) Search for revisions ");
 
         while (getAction(options) == 1) {
             JSONConvert jsonConvert = getJSONData();
@@ -35,29 +35,10 @@ public class Main {
                         System.out.println(jsonConvert.getData().id);
                         break;
                     }
-                    case 2: { // Search for last revision
-                        JSONConvert.Revision revision = jsonConvert.getData().revisions.getFirst();
-
-                        System.out.println();
-                        System.out.print("Last edit by user: ");
-                        System.out.print(revision.user);
-                        System.out.print(" on ");
-
-                        StringBuilder correctedTime = new StringBuilder();
-
-                        String[] dateAndTme = revision.timestamp.split("T");
-                        String date = dateAndTme[0];
-                        String time = dateAndTme[1].replace('Z', ' ');
-
-                        String[] yearMonthDay = date.split("-");
-                        correctedTime.append(yearMonthDay[1]).append("/"); // Month
-                        correctedTime.append(yearMonthDay[2]).append("/"); // Day
-                        correctedTime.append(yearMonthDay[0]); // Year
-
-                        correctedTime.append(" at ");
-                        correctedTime.append(time);
-
-                        System.out.println(correctedTime);
+                    case 2: { // Search for revisions
+                        for (JSONConvert.Revision revision : jsonConvert.getData().revisions) {
+                            printRevision(revision);
+                        }
                         break;
                     }
                     default:
@@ -65,6 +46,29 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static void printRevision(JSONConvert.Revision revision) {
+        System.out.println();
+        System.out.print("Edited by User: ");
+        System.out.print(revision.user);
+        System.out.print(" on ");
+
+        StringBuilder correctedTime = new StringBuilder();
+
+        String[] dateAndTme = revision.timestamp.split("T");
+        String date = dateAndTme[0];
+        String time = dateAndTme[1].replace('Z', ' ');
+
+        String[] yearMonthDay = date.split("-");
+        correctedTime.append(yearMonthDay[1]).append("/"); // Month
+        correctedTime.append(yearMonthDay[2]).append("/"); // Day
+        correctedTime.append(yearMonthDay[0]); // Year
+
+        correctedTime.append(" at ");
+        correctedTime.append(time);
+
+        System.out.println(correctedTime);
     }
 
     private static int getAction(ArrayList<String> options) {
