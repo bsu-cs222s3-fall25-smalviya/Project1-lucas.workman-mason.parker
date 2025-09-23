@@ -22,8 +22,7 @@ public class FetchWikipedia {
         input.nextLine();
         URLConnection connection = getRawWikipediaData(subject);
         String jsonData = connectionAsString(connection);
-        this.conversion = new JSONConvert();
-        System.out.println(this.conversion.getGson(jsonData));
+        this.conversion = new JSONConvert(jsonData);
     }
 
     public JSONConvert getConversion() {
