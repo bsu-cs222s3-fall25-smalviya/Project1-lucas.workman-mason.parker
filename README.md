@@ -37,3 +37,18 @@ GetJsonData is the class inside main that will get our data based on the scanner
 ## Authors
 
 ### Lucas Workman, Mason Parker
+
+## Build
+
+To build the project, there are two options
+
+### Git Clone
+1) Open a new project in IDE of your choice
+2) run https://github.com/LucasW962/First-lucas.workman-mason.parker in the CLI
+3) execute the program
+
+### ZIP download
+1) Click the code button on the github master branch
+2) Click download branch
+3) Extract the folder
+4) Run the main java file
