@@ -6,12 +6,16 @@ import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.*;
 
 public class FetchWikipedia {
 
     private final JSONConvert conversion;
 
-    public FetchWikipedia(String subject) throws IOException, URISyntaxException {
+    public FetchWikipedia() throws IOException, URISyntaxException {
+        Scanner input = new Scanner(System.in);
+        String subject = input.nextLine();
+        input.nextLine();
         URLConnection connection = getRawWikipediaData(subject);
         String jsonData = connectionAsString(connection);
         this.conversion = new JSONConvert(jsonData);
@@ -20,6 +24,7 @@ public class FetchWikipedia {
     public JSONConvert getConversion() {
         return this.conversion;
     }
+
 
     private static URLConnection getRawWikipediaData(String subject) throws IOException, URISyntaxException {
 
@@ -37,5 +42,6 @@ public class FetchWikipedia {
     private static String connectionAsString(URLConnection connection) throws IOException {
         return new String(connection.getInputStream().readAllBytes(), Charset.defaultCharset());
     }
+
 
 }
