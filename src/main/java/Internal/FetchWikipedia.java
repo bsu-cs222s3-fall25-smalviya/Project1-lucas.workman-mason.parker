@@ -9,6 +9,14 @@ import java.nio.charset.Charset;
 
 public class FetchWikipedia {
 
+    public FetchWikipedia(String subject) {
+        try {
+            URLConnection connection = getRawWikipediaData(subject);
+        } catch (URISyntaxException | IOException e) {
+            System.out.println("Unhandled Exception.");
+        }
+    }
+
     public static URLConnection getRawWikipediaData(String subject) throws IOException, URISyntaxException {
 
         String encodedURL = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" +
