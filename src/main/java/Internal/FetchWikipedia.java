@@ -9,15 +9,18 @@ import java.nio.charset.Charset;
 
 public class FetchWikipedia {
 
+    public URLConnection connection;
+
     public FetchWikipedia(String subject) {
         try {
-            URLConnection connection = getRawWikipediaData(subject);
+            connection = getRawWikipediaData(subject);
+            String jsonData = connectionAsString(connection);
         } catch (URISyntaxException | IOException e) {
             System.out.println("Unhandled Exception.");
         }
     }
 
-    public static URLConnection getRawWikipediaData(String subject) throws IOException, URISyntaxException {
+    private static URLConnection getRawWikipediaData(String subject) throws IOException, URISyntaxException {
 
         String encodedURL = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" +
                 URLEncoder.encode(subject, Charset.defaultCharset()) + "&rvprop=timestamp" +
@@ -28,6 +31,10 @@ public class FetchWikipedia {
         connection.setRequestProperty("User-Agent", "FirstProject/0.1 (academic use; https://example.com)");
         connection.connect();
         return connection;
+    }
+
+    private static String connectionAsString(URLConnection connection) throws IOException {
+        return new String(connection.getInputStream().readAllBytes(), Charset.defaultCharset());
     }
 
 }
