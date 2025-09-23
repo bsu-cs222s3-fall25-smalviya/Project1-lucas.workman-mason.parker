@@ -12,12 +12,7 @@ public class FetchWikipedia {
 
     private final JSONConvert conversion;
 
-
-
-    public FetchWikipedia() throws IOException, URISyntaxException {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter Wikipedia Name: ");
-        String subject = input.nextLine();
+    public FetchWikipedia(String subject) throws IOException, URISyntaxException {
         URLConnection connection = getRawWikipediaData(subject);
         String jsonData = connectionAsString(connection);
         this.conversion = new JSONConvert(jsonData);
