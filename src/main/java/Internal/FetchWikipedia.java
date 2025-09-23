@@ -12,7 +12,7 @@ public class FetchWikipedia {
 
     private final JSONConvert conversion;
 
-    public FetchWikipedia(String subject) throws IOException, URISyntaxException {
+    public FetchWikipedia(String subject) throws NoSuchURLException, BadConnectionException, CouldNotConvertToStringException {
         URLConnection connection = getRawWikipediaData(subject);
         String jsonData = connectionAsString(connection);
         this.conversion = new JSONConvert(jsonData);
@@ -23,23 +23,42 @@ public class FetchWikipedia {
     }
 
 
-    private static URLConnection getRawWikipediaData(String subject) throws IOException, URISyntaxException {
+    private static URLConnection getRawWikipediaData(String subject) throws NoSuchURLException, BadConnectionException {
 
         String encodedURL = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" +
                 URLEncoder.encode(subject, Charset.defaultCharset()) + "&rvprop=timestamp" +
                 URLEncoder.encode("|", Charset.defaultCharset()) + "user&rvlimit=4&redirects";
-        URI uri = new URI(encodedURL);
+        URI uri;
+        try {
+            uri = new URI(encodedURL);
+        } catch (URISyntaxException e) {
+            throw new NoSuchURLException();
+        }
 
-        URLConnection connection = uri.toURL().openConnection();
-        connection.setRequestProperty("User-Agent", "FirstProject/0.1 (academic use; https://example.com)");
-        connection.connect();
+        URLConnection connection;
+        try {
+            connection = uri.toURL().openConnection();
+            connection.setRequestProperty("User-Agent", "FirstProject/0.1 (academic use; https://example.com)");
+            connection.connect();
+        } catch (IOException e) {
+            throw new BadConnectionException();
+        }
+
         return connection;
     }
 
-    private static String connectionAsString(URLConnection connection) throws IOException {
-        return new String(connection.getInputStream().readAllBytes(), Charset.defaultCharset());
+    private static String connectionAsString(URLConnection connection) throws CouldNotConvertToStringException {
+        try {
+            return new String(connection.getInputStream().readAllBytes(), Charset.defaultCharset());
+        } catch (IOException e) {
+            throw new CouldNotConvertToStringException();
+        }
     }
 
+    public static class NoSuchURLException extends Exception {}
 
+    public static class BadConnectionException extends Exception {}
+
+    public static class CouldNotConvertToStringException extends Exception {}
 
 }
