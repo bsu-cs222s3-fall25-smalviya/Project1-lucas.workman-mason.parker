@@ -14,6 +14,7 @@ public class FetchWikipedia {
 
     public FetchWikipedia() throws IOException, URISyntaxException {
         Scanner input = new Scanner(System.in);
+        System.out.print("Enter Wikipedia Name: ");
         String subject = input.nextLine();
         input.nextLine();
         URLConnection connection = getRawWikipediaData(subject);
