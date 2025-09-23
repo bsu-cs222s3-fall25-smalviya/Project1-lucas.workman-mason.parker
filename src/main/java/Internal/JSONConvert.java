@@ -18,7 +18,7 @@ public class JSONConvert {
 
         Gson gson = new Gson();
 
-        JsonElement jsonElement = new JsonParser().parse(jsonData);
+        JsonElement jsonElement = JsonParser.parseString(jsonData);
         JsonElement pages = jsonElement.getAsJsonObject().get("query").getAsJsonObject().get("pages");
 
         Set<Map.Entry<String, JsonElement>> entrySet = pages.getAsJsonObject().entrySet();
