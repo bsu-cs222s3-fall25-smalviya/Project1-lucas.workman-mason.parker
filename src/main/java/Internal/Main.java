@@ -33,10 +33,25 @@ public class Main {
                         JSONConvert.Revision revision = jsonConvert.getData().revisions.getFirst();
 
                         System.out.println();
-                        System.out.print("Last edit by: ");
+                        System.out.print("Last edit by user: ");
                         System.out.print(revision.user);
-                        System.out.print(" at ");
-                        System.out.println(revision.timestamp);
+                        System.out.print(" on ");
+
+                        StringBuilder correctedTime = new StringBuilder();
+
+                        String[] dateAndTme = revision.timestamp.split("T");
+                        String date = dateAndTme[0];
+                        String time = dateAndTme[1].replace('Z', ' ');
+
+                        String[] yearMonthDay = date.split("-");
+                        correctedTime.append(yearMonthDay[1]).append("/"); // Month
+                        correctedTime.append(yearMonthDay[2]).append("/"); // Day
+                        correctedTime.append(yearMonthDay[0]); // Year
+
+                        correctedTime.append(" at ");
+                        correctedTime.append(time);
+
+                        System.out.println(correctedTime);
                         System.out.println();
                         break;
                     }
