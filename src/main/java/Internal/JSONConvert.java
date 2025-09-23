@@ -23,13 +23,13 @@ public class JSONConvert {
 
         Set<Map.Entry<String, JsonElement>> entrySet = pages.getAsJsonObject().entrySet();
 
-        JsonElement yourDesiredElement = null;
+        Optional<Map.Entry<String, JsonElement>> first = entrySet.stream().findFirst();
 
-        for(Map.Entry<String,JsonElement> entry : entrySet){
-            yourDesiredElement = entry.getValue();
+        if (first.isEmpty()) {
+            throw new NoSuchElementException();
         }
 
-        this.data = gson.fromJson(yourDesiredElement.toString(), Data.class);
+        this.data = gson.fromJson(first.get().getValue().toString(), Data.class);
 
         //TODO: convert to useful data and add getters
 
@@ -46,7 +46,7 @@ public class JSONConvert {
         int id;
         int ns;
         String title;
-        ArrayList<Revision> revisions;
+        List<Revision> revisions;
     }
 
 }
