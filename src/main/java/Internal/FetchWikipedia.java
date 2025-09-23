@@ -22,9 +22,7 @@ public class FetchWikipedia {
         return this.conversion;
     }
 
-
     private static URLConnection getRawWikipediaData(String subject) throws NoSuchURLException, BadConnectionException {
-
         String encodedURL = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" +
                 URLEncoder.encode(subject, Charset.defaultCharset()) + "&rvprop=timestamp" +
                 URLEncoder.encode("|", Charset.defaultCharset()) + "user&rvlimit=4&redirects";
