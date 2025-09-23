@@ -1,5 +1,6 @@
 package Internal;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -8,15 +9,21 @@ public class Main {
 
     public static void main(String[] args) {
 
-        while (getPageAction() == 1) {
+        ArrayList<String> options = new ArrayList<>();
+        options.add("(0) Quit ");
+        options.add("(1) Search for page ");
+
+        ArrayList<String> pageOptions = new ArrayList<>();
+        pageOptions.add("(0) Back ");
+        pageOptions.add("(1) Get page data ");
+        pageOptions.add("(2) Search for last revision ");
+
+        while (getAction(options) == 1) {
             JSONConvert jsonConvert = getJSONData();
 
             boolean inPage = true;
             while (inPage) {
-
-                int action = getAction();
-
-                switch (action) {
+                switch (getAction(pageOptions)) {
                     case 0: // Back
                         inPage = false;
                         break;
@@ -26,7 +33,6 @@ public class Main {
                         System.out.println(jsonConvert.getData().title);
                         System.out.print("Page Id: ");
                         System.out.println(jsonConvert.getData().id);
-                        System.out.println();
                         break;
                     }
                     case 2: { // Search for last revision
@@ -52,7 +58,6 @@ public class Main {
                         correctedTime.append(time);
 
                         System.out.println(correctedTime);
-                        System.out.println();
                         break;
                     }
                     default:
@@ -62,11 +67,13 @@ public class Main {
         }
     }
 
-    private static int getPageAction() {
+    private static int getAction(ArrayList<String> options) {
+        System.out.println();
         int action = -1;
         while (action == -1) {
-            System.out.println("(0) Quit ");
-            System.out.println("(1) Search for page ");
+            for (String option : options) {
+                System.out.println(option);
+            }
             System.out.print("Enter Option: ");
             String sOption = input.nextLine();
 
@@ -76,30 +83,7 @@ public class Main {
                 System.out.println("Invalid Option, please try again.");
                 continue;
             }
-            if (action < 0 || action > 1) {
-                System.out.println("Invalid Option, please try again.");
-                action = -1;
-            }
-        }
-        return action;
-    }
-
-    private static int getAction() {
-        int action = -1;
-        while (action == -1) {
-            System.out.println("(0) Back ");
-            System.out.println("(1) Get page data ");
-            System.out.println("(2) Search for last revision ");
-            System.out.print("Enter Option: ");
-            String sOption = input.nextLine();
-
-            try {
-                action = Integer.parseInt(sOption);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid Option, please try again.");
-                continue;
-            }
-            if (action < 0 || action > 2) {
+            if (action < 0 || action > options.size() - 1) {
                 System.out.println("Invalid Option, please try again.");
                 action = -1;
             }
@@ -108,6 +92,7 @@ public class Main {
     }
 
     private static JSONConvert getJSONData() {
+        System.out.println();
         System.out.print("Enter Wikipedia Name: ");
         String subject = input.nextLine();
 
