@@ -8,6 +8,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         FetchWikipedia wikipediaFetch = new FetchWikipedia();
-        System.out.println(wikipediaFetch.getConversion().data);
+        System.out.println(wikipediaFetch.getConversion().data.id);
     }
 }
