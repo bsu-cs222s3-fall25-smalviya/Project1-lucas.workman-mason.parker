@@ -9,15 +9,16 @@ import java.nio.charset.Charset;
 
 public class FetchWikipedia {
 
-    public URLConnection connection;
+    private final JSONConvert conversion;
 
-    public FetchWikipedia(String subject) {
-        try {
-            connection = getRawWikipediaData(subject);
-            String jsonData = connectionAsString(connection);
-        } catch (URISyntaxException | IOException e) {
-            System.out.println("Unhandled Exception.");
-        }
+    public FetchWikipedia(String subject) throws IOException, URISyntaxException {
+        URLConnection connection = getRawWikipediaData(subject);
+        String jsonData = connectionAsString(connection);
+        this.conversion = new JSONConvert(jsonData);
+    }
+
+    public JSONConvert getConversion() {
+        return this.conversion;
     }
 
     private static URLConnection getRawWikipediaData(String subject) throws IOException, URISyntaxException {
