@@ -14,8 +14,6 @@ public class JSONConvert {
     public JSONConvert(String jsonData) throws FetchWikipedia.NoSuchURLException {
         this.data = new Data();
 
-
-
         Gson gson = new Gson();
 
         JsonElement jsonElement = JsonParser.parseString(jsonData);
