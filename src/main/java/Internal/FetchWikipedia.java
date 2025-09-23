@@ -7,7 +7,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.*;
-import com.google.gson.Gson;
 
 public class FetchWikipedia {
 
@@ -19,11 +18,9 @@ public class FetchWikipedia {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter Wikipedia Name: ");
         String subject = input.nextLine();
-        input.nextLine();
         URLConnection connection = getRawWikipediaData(subject);
         String jsonData = connectionAsString(connection);
-        this.conversion = new JSONConvert();
-        System.out.println(this.conversion.getGson(jsonData));
+        this.conversion = new JSONConvert(jsonData);
     }
 
     public JSONConvert getConversion() {
