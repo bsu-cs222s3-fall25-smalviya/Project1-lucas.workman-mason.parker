@@ -93,14 +93,25 @@ public class Main {
     }
 
     private static JSONConvert getJSONData() {
-
-
-
         System.out.print("Enter Wikipedia Name: ");
         String subject = input.nextLine();
-        FetchWikipedia wikipediaFetch;
+
+        if (subject.isEmpty()) {
+            System.out.println("No page requested, please try again.");
+            return getJSONData();
+        }
+
         try {
-            wikipediaFetch = new FetchWikipedia(subject);
+            FetchWikipedia wikipediaFetch = new FetchWikipedia(subject);
+            JSONConvert jsonConvert = wikipediaFetch.getConversion();
+
+            if (!jsonConvert.getData().title.equalsIgnoreCase(subject)) {
+                System.out.println();
+                System.out.println("Redirected to " + jsonConvert.getData().title + ".");
+                System.out.println();
+            }
+
+            return jsonConvert;
         } catch (FetchWikipedia.NoSuchURLException e) {
             System.out.println("Could not find Page, please try again.");
             return getJSONData();
@@ -111,6 +122,5 @@ public class Main {
             System.out.println("Could not connect to Wikipedia, please try again.");
             return getJSONData();
         }
-        return wikipediaFetch.getConversion();
     }
 }
