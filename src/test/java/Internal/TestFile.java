@@ -10,7 +10,8 @@ public class TestFile {
 
 
     @Test
-    public void File() {
+    public void File() throws FetchWikipedia.NoSuchURLException, FetchWikipedia.CouldNotConvertToStringException, FetchWikipedia.BadConnectionException {
+        FetchWikipedia wikipediaFetcher = new FetchWikipedia("George Washington");
 
     }
 }
