@@ -7,10 +7,13 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.*;
+import com.google.gson.Gson;
 
 public class FetchWikipedia {
 
     private final JSONConvert conversion;
+
+
 
     public FetchWikipedia() throws IOException, URISyntaxException {
         Scanner input = new Scanner(System.in);
@@ -19,7 +22,8 @@ public class FetchWikipedia {
         input.nextLine();
         URLConnection connection = getRawWikipediaData(subject);
         String jsonData = connectionAsString(connection);
-        this.conversion = new JSONConvert(jsonData);
+        this.conversion = new JSONConvert();
+        System.out.println(this.conversion.getGson(jsonData));
     }
 
     public JSONConvert getConversion() {
@@ -43,6 +47,7 @@ public class FetchWikipedia {
     private static String connectionAsString(URLConnection connection) throws IOException {
         return new String(connection.getInputStream().readAllBytes(), Charset.defaultCharset());
     }
+
 
 
 }

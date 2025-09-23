@@ -1,17 +1,18 @@
 package Internal;
 
-import java.io.IOException;
-import java.net.URLConnection;
-import java.nio.charset.Charset;
+import java.lang.reflect.Type;
+
+import com.google.gson.Gson;
 
 public class JSONConvert {
 
     public String data;
 
-    public JSONConvert(String jsonData) {
-        this.data = jsonData;
-        //TODO: convert to useful data and add getters
+    private final Gson gson = new Gson();
 
+    public String getGson(String jsonData) {
+        this.data = jsonData;
+        return String.valueOf(gson.fromJson(this.data, (Type) String.class));
     }
 
 }
