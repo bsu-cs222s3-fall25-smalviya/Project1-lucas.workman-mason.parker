@@ -10,7 +10,7 @@ public class JSONConvert {
 
     public JSONConvert(String jsonData) {
         this.data = jsonData;
-
+        //TODO: convert to useful data and add getters
 
     }
 
