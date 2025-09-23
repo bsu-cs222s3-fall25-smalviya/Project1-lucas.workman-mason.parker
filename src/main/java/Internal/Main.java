@@ -23,14 +23,14 @@ public class Main {
                     case 1: { // Get page data
                         System.out.println();
                         System.out.print("Page Title: ");
-                        System.out.println(jsonConvert.data.title);
+                        System.out.println(jsonConvert.getData().title);
                         System.out.print("Page Id: ");
-                        System.out.println(jsonConvert.data.id);
+                        System.out.println(jsonConvert.getData().id);
                         System.out.println();
                         break;
                     }
                     case 2: { // Search for last revision
-                        JSONConvert.Revision revision = jsonConvert.data.revisions.getFirst();
+                        JSONConvert.Revision revision = jsonConvert.getData().revisions.getFirst();
 
                         System.out.println();
                         System.out.print("Last edit by: ");

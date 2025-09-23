@@ -9,7 +9,7 @@ import java.util.*;
 
 public class JSONConvert {
 
-    public Data data;
+    private Data data;
 
     public JSONConvert(String jsonData) throws FetchWikipedia.NoSuchURLException {
         this.data = new Data();
@@ -37,16 +37,18 @@ public class JSONConvert {
         }
     }
 
-    static class Revision {
+    public Data getData() {
+        return data;
+    }
+
+    public static class Revision {
         String user;
-        String anon;
         String timestamp;
     }
 
-    static class Data {
+    public static class Data {
         @SerializedName("pageid")
         int id;
-        int ns;
         String title;
         List<Revision> revisions;
     }

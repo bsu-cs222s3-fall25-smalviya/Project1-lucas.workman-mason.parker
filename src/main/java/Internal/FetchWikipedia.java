@@ -28,6 +28,11 @@ public class FetchWikipedia {
         String encodedURL = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=" +
                 URLEncoder.encode(subject, Charset.defaultCharset()) + "&rvprop=timestamp" +
                 URLEncoder.encode("|", Charset.defaultCharset()) + "user&rvlimit=4&redirects";
+
+        return getUrlConnection(encodedURL);
+    }
+
+    private static URLConnection getUrlConnection(String encodedURL) throws NoSuchURLException, BadConnectionException {
         URI uri;
         try {
             uri = new URI(encodedURL);
@@ -38,12 +43,11 @@ public class FetchWikipedia {
         URLConnection connection;
         try {
             connection = uri.toURL().openConnection();
-            connection.setRequestProperty("User-Agent", "FirstProject/0.1 (academic use; https://example.com)");
+            connection.setRequestProperty("User-Agent", "FirstProject/0.1 (academic use; mason.parker@bsu.edu/lucas.workman@bsu.edu)");
             connection.connect();
         } catch (IOException e) {
             throw new BadConnectionException();
         }
-
         return connection;
     }
 
