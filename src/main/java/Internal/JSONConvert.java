@@ -30,9 +30,6 @@ public class JSONConvert {
         }
 
         this.data = gson.fromJson(first.get().getValue().toString(), Data.class);
-
-        //TODO: convert to useful data and add getters
-
     }
 
     static class Revision {
