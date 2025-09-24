@@ -32,6 +32,12 @@ These classes use exceptions to check for ints and the proper input exceptions, 
 GetJsonData is the class inside main that will get our data based on the scanner subject
 
 
+## Test Cases
+
+All of the test cases are different, one of them uses a scanner for input, where another does practically the same thing but passes in a string instead of a scanner string.
+Another test case utilizies a json in a string format with the same fields the parser accepts to test if the parser works.
+
+
 
 
 ## Authors
