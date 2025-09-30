@@ -31,6 +31,20 @@ GetAction and GetPageAction should both return ints to determine what data we sh
 These classes use exceptions to check for ints and the proper input exceptions, like 1 or 0 for exit/ get page data
 GetJsonData is the class inside main that will get our data based on the scanner subject
 
+## GUI
+
+Gui class uses JavaFX to mount the UI. We used a Vbox for the root and a pane to properly space out elements.
+The input box is there to take input to search for the website, the main counterpart is a scanner object
+Theres a button beside it, when clicked it will send the web request based on the input box text using the onsearch function and passing the action event
+If a page isn't found, redirect to the new page found.
+It will loop through to get the revisions, format them, and add them to the output label
+It starts by getting the title and ID of the page so theyre at the top before the revisions
+
+
+##  Launcher
+
+Launcher serves as the entry point for the gui, it will run Application launch on the gui class 
+
 
 ## Test Cases
 
