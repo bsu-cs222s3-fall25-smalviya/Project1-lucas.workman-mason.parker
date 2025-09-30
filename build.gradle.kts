@@ -29,4 +29,5 @@ javafx {
 
 application {
     mainClass.set("edu.bsu.cs.Launcher")
+    applicationDefaultJvmArgs = listOf("--enable-native-access=javafx.graphics")
 }
