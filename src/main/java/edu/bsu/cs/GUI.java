@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
@@ -32,6 +33,7 @@ public class GUI extends Application {
         inputField.setPrefWidth(125);
 
         outputLabel = new Label();
+        outputLabel.setTextFill(Color.RED);
 
         Button search = new javafx.scene.control.Button("Search");
         GridPane.setConstraints(search, 1, 0);
