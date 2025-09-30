@@ -1,5 +1,7 @@
 package Internal;
 
+import javafx.application.Application;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,6 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Application.launch(GUI.class, args);
+
+        /*
         ArrayList<String> options = new ArrayList<>();
         options.add("(0) Quit ");
         options.add("(1) Search for page ");
@@ -45,7 +50,7 @@ public class Main {
                         break;
                 }
             }
-        }
+        }*/
     }
 
     private static void printRevision(JSONConvert.Revision revision) {
