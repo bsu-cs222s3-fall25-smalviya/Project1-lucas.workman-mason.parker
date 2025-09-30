@@ -47,34 +47,41 @@ public class GUI extends Application {
     }
 
     void onSearch(ActionEvent actionEvent) {
-        JSONConvert jsonConvert = getJSONData();
+        StringBuilder formattedString = new StringBuilder();
 
-        for (JSONConvert.Revision revision : jsonConvert.getData().revisions) {
-            StringBuilder formattedString = new StringBuilder();
+        JSONConvert jsonConvert = getJSONData(formattedString);
+        if (jsonConvert != null) {
 
-            String[] dateAndTme = revision.timestamp.split("T");
-            String date = dateAndTme[0];
-            String time = dateAndTme[1].replace('Z', ' ');
+            for (JSONConvert.Revision revision : jsonConvert.getData().revisions) {
 
-            String[] yearMonthDay = date.split("-");
-            formattedString.append(yearMonthDay[1]).append("/"); // Month
-            formattedString.append(yearMonthDay[2]).append("/"); // Day
-            formattedString.append(yearMonthDay[0]); // Year
+                formattedString.append("\nEdited by User: ");
+                formattedString.append(revision.user);
+                formattedString.append(" on ");
 
-            formattedString.append(" at ");
-            formattedString.append(time);
+                String[] dateAndTme = revision.timestamp.split("T");
+                String date = dateAndTme[0];
+                String time = dateAndTme[1].replace('Z', ' ');
 
-            outputLabel.setText(formattedString.toString());
+                String[] yearMonthDay = date.split("-");
+                formattedString.append(yearMonthDay[1]).append("/"); // Month
+                formattedString.append(yearMonthDay[2]).append("/"); // Day
+                formattedString.append(yearMonthDay[0]); // Year
 
+                formattedString.append(" at ");
+                formattedString.append(time);
+
+                formattedString.append("\n");
+            }
         }
+        outputLabel.setText(formattedString.toString());
     }
 
-    private JSONConvert getJSONData() {
+    private JSONConvert getJSONData(StringBuilder outputString) {
         String subject = inputField.getText();
 
         if (subject.isEmpty()) {
-            System.out.println("No page requested, please try again.");
-            return getJSONData();
+            outputString.append("\nNo page requested, please try again.\n");
+            return null;
         }
 
         try {
@@ -82,21 +89,21 @@ public class GUI extends Application {
             JSONConvert jsonConvert = wikipediaFetch.getConversion();
 
             if (!jsonConvert.getData().title.equalsIgnoreCase(subject)) {
-                System.out.println();
-                System.out.println("Redirected to " + jsonConvert.getData().title + ".");
-                System.out.println();
+                outputString.append("\nRedirected to ");
+                outputString.append(jsonConvert.getData().title);
+                outputString.append(".\n");
             }
 
             return jsonConvert;
         } catch (FetchWikipedia.NoSuchURLException e) {
-            System.out.println("Could not find Page, please try again.");
-            return getJSONData();
+            outputString.append("\nCould not find Page, please try again.\n");
+            return null;
         } catch (FetchWikipedia.CouldNotConvertToStringException e) {
-            System.out.println("Could not convert JSON, please try again.");
-            return getJSONData();
+            outputString.append("\nCould not convert JSON, please try again.\n");
+            return null;
         } catch (FetchWikipedia.BadConnectionException e) {
-            System.out.println("Could not connect to Wikipedia, please try again.");
-            return getJSONData();
+            outputString.append("\nCould not connect to Wikipedia, please try again.\n");
+            return null;
         }
     }
 }
