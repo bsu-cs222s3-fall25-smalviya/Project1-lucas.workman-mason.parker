@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
     id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
@@ -17,11 +18,15 @@ dependencies {
     implementation("com.google.code.gson:gson:2.13.2")
 }
 
-javafx {
-    version = "25"
-    modules("javafx.controls", "javafx.fxml", "javafx.graphics", "javafx.base")
-}
-
 tasks.test {
     useJUnitPlatform()
+}
+
+javafx {
+    version = "25"
+    modules("javafx.controls", "javafx.fxml")
+}
+
+application {
+    mainClass.set("edu.bsu.cs.Launcher")
 }
