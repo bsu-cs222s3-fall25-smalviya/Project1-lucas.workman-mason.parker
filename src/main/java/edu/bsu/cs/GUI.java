@@ -14,8 +14,11 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUI extends Application {
+
+    TextField textField;
 
     @Override
     public void start(Stage stage) {
@@ -29,35 +32,77 @@ public class GUI extends Application {
 
 
 
-        final TextField textField = new TextField ();
+        textField = new TextField();
         textField.setPromptText("Search Item");
-       // textField.setPrefColumnCount(5);
         textField.setPrefHeight(25);
         textField.setPrefWidth(55);
         textField.getText();
-       // pane.getChildren().add(title);
 
         Button search = new javafx.scene.control.Button("Search");
         GridPane.setConstraints(search, 1, 0);
-       pane.getChildren().add(search);
+        pane.getChildren().add(search);
 
-       search.setOnAction(new EventHandler<ActionEvent>() {
-           @Override
-           public void handle(ActionEvent actionEvent) {
-               System.out.println(textField.getText());
-           }
-       });
+        search.setOnAction(this::onSearch);
 
-
-        pane.getChildren().add(textField);
-
-
-
-        root.getChildren().addAll(title, pane);
+        root.getChildren().addAll(textField, title, pane);
 
         Scene scene = new Scene(root, 600, 400);
         stage.setScene(scene);
         stage.setTitle("GUI Test");
         stage.show();
+    }
+
+    void onSearch(ActionEvent actionEvent) {
+        JSONConvert jsonConvert = getJSONData();
+
+        for (JSONConvert.Revision revision : jsonConvert.getData().revisions) {
+            StringBuilder formattedString = new StringBuilder();
+
+            String[] dateAndTme = revision.timestamp.split("T");
+            String date = dateAndTme[0];
+            String time = dateAndTme[1].replace('Z', ' ');
+
+            String[] yearMonthDay = date.split("-");
+            formattedString.append(yearMonthDay[1]).append("/"); // Month
+            formattedString.append(yearMonthDay[2]).append("/"); // Day
+            formattedString.append(yearMonthDay[0]); // Year
+
+            formattedString.append(" at ");
+            formattedString.append(time);
+
+            // Need output to screen
+
+        }
+    }
+
+    private JSONConvert getJSONData() {
+        String subject = textField.getText();
+
+        if (subject.isEmpty()) {
+            System.out.println("No page requested, please try again.");
+            return getJSONData();
+        }
+
+        try {
+            FetchWikipedia wikipediaFetch = new FetchWikipedia(subject);
+            JSONConvert jsonConvert = wikipediaFetch.getConversion();
+
+            if (!jsonConvert.getData().title.equalsIgnoreCase(subject)) {
+                System.out.println();
+                System.out.println("Redirected to " + jsonConvert.getData().title + ".");
+                System.out.println();
+            }
+
+            return jsonConvert;
+        } catch (FetchWikipedia.NoSuchURLException e) {
+            System.out.println("Could not find Page, please try again.");
+            return getJSONData();
+        } catch (FetchWikipedia.CouldNotConvertToStringException e) {
+            System.out.println("Could not convert JSON, please try again.");
+            return getJSONData();
+        } catch (FetchWikipedia.BadConnectionException e) {
+            System.out.println("Could not connect to Wikipedia, please try again.");
+            return getJSONData();
+        }
     }
 }
