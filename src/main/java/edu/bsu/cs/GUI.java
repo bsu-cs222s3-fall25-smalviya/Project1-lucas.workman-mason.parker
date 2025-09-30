@@ -2,23 +2,18 @@ package edu.bsu.cs;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
-import java.awt.*;
-import java.util.ArrayList;
-
 public class GUI extends Application {
 
-    TextField textField;
+    TextField inputField;
+    Label outputLabel;
 
     @Override
     public void start(Stage stage) {
@@ -30,22 +25,20 @@ public class GUI extends Application {
 
         GridPane pane = new GridPane();
 
+        inputField = new TextField();
+        inputField.setPromptText("Search Item");
+        inputField.setPrefHeight(25);
+        inputField.setPrefWidth(55);
 
-
-        textField = new TextField();
-        textField.setPromptText("Search Item");
-        textField.setPrefHeight(25);
-        textField.setPrefWidth(55);
-        textField.getText();
+        outputLabel = new Label();
 
         Button search = new javafx.scene.control.Button("Search");
         GridPane.setConstraints(search, 1, 0);
         search.setPrefHeight(25);
-        pane.getChildren().addAll(textField, search);
-
         search.setOnAction(this::onSearch);
 
-        root.getChildren().addAll(title,pane);
+        pane.getChildren().addAll(inputField, search);
+        root.getChildren().addAll(title, pane, outputLabel);
 
         Scene scene = new Scene(root, 600, 400);
         stage.setScene(scene);
@@ -71,13 +64,13 @@ public class GUI extends Application {
             formattedString.append(" at ");
             formattedString.append(time);
 
-            // Need output to screen
+            outputLabel.setText(formattedString.toString());
 
         }
     }
 
     private JSONConvert getJSONData() {
-        String subject = textField.getText();
+        String subject = inputField.getText();
 
         if (subject.isEmpty()) {
             System.out.println("No page requested, please try again.");
