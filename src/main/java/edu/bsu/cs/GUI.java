@@ -40,11 +40,12 @@ public class GUI extends Application {
 
         Button search = new javafx.scene.control.Button("Search");
         GridPane.setConstraints(search, 1, 0);
-        pane.getChildren().add(search);
+        search.setPrefHeight(25);
+        pane.getChildren().addAll(textField, search);
 
         search.setOnAction(this::onSearch);
 
-        root.getChildren().addAll(textField, title, pane);
+        root.getChildren().addAll(title,pane);
 
         Scene scene = new Scene(root, 600, 400);
         stage.setScene(scene);
