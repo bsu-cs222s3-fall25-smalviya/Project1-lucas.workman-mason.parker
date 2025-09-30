@@ -15,6 +15,7 @@ public class GUI extends Application {
     TextField inputField;
     Label outputLabel;
 
+
     @Override
     public void start(Stage stage) {
 
@@ -28,7 +29,7 @@ public class GUI extends Application {
         inputField = new TextField();
         inputField.setPromptText("Search Item");
         inputField.setPrefHeight(25);
-        inputField.setPrefWidth(55);
+        inputField.setPrefWidth(125);
 
         outputLabel = new Label();
 
