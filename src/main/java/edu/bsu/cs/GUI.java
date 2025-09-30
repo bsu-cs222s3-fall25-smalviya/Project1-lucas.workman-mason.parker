@@ -53,6 +53,12 @@ public class GUI extends Application {
         JSONConvert jsonConvert = getJSONData(formattedString);
         if (jsonConvert != null) {
 
+            formattedString.append("\nPage Title: ");
+            formattedString.append(jsonConvert.getData().title);
+            formattedString.append("\nPage Id: ");
+            formattedString.append(jsonConvert.getData().id);
+            formattedString.append("\n\nRevisions: \n");
+
             for (JSONConvert.Revision revision : jsonConvert.getData().revisions) {
 
                 formattedString.append("\nEdited by User: ");
