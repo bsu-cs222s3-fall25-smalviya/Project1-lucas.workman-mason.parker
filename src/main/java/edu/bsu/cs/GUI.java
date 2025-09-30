@@ -16,16 +16,15 @@ public class GUI extends Application {
     TextField inputField;
     Label outputLabel;
 
-
     @Override
     public void start(Stage stage) {
-
-        Label title = new Label("Wikipedia Web Parser");
 
         VBox root = new VBox(10);
         root.setStyle("-fx-padding: 10;");
 
         GridPane pane = new GridPane();
+
+        Label title = new Label("Wikipedia Web Parser");
 
         inputField = new TextField();
         inputField.setPromptText("Search Item");
@@ -45,7 +44,7 @@ public class GUI extends Application {
 
         Scene scene = new Scene(root, 600, 400);
         stage.setScene(scene);
-        stage.setTitle("GUI Test");
+        stage.setTitle("Wikipedia Web Parser");
         stage.show();
     }
 
