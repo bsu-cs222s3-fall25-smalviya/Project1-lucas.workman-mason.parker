@@ -58,7 +58,9 @@ public class GUI extends Application {
             formattedString.append(jsonConvert.getData().title);
             formattedString.append("\nPage Id: ");
             formattedString.append(jsonConvert.getData().id);
-            formattedString.append("\n\nRevisions: \n");
+            formattedString.append("\n\n");
+            formattedString.append(jsonConvert.getData().revisions.size());
+            formattedString.append(" Revision(s): \n");
 
             for (JSONConvert.Revision revision : jsonConvert.getData().revisions) {
 
