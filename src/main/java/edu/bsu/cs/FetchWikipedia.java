@@ -1,4 +1,4 @@
-package Internal;
+package edu.bsu.cs;
 
 import java.io.IOException;
 import java.net.URI;
@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.util.*;
 
 public class FetchWikipedia {
 

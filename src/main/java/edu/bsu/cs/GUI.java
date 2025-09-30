@@ -1,4 +1,4 @@
-package Internal;
+package edu.bsu.cs;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
